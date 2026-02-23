@@ -1,0 +1,199 @@
+{% extends "base1.html" %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+
+<style>
+    .product-grid {
+
+        display: grid;
+
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+
+        gap: 25px;
+
+        margin-top: 20px;
+
+    }
+
+
+    .product-card {
+
+        border-radius: 14px;
+
+        background: #ffffff;
+
+        box-shadow: 0 10px 22px rgba(16, 185, 129, 0.18);
+
+        padding: 15px;
+
+        text-align: center;
+
+        transition: 0.3s;
+
+    }
+
+
+    .product-card:hover {
+
+        transform: translateY(-6px);
+
+        box-shadow: 0 18px 35px rgba(16, 185, 129, 0.28);
+
+    }
+
+
+    .product-card img {
+
+        width: 100%;
+
+        height: 180px;
+
+        object-fit: contain;
+
+        margin-bottom: 10px;
+
+    }
+
+
+    .product-card h3 {
+
+        margin: 6px 0;
+
+        font-size: 17px;
+
+        color: #065f46;
+
+    }
+
+
+    .product-card p {
+
+        margin: 3px 0;
+
+        font-size: 14px;
+
+        color: #555;
+
+    }
+
+
+    .product-card .price {
+
+        color: #10b981;
+
+        font-weight: bold;
+
+        font-size: 16px;
+
+    }
+
+
+    .product-card a {
+
+        display: inline-block;
+
+        margin-top: 8px;
+
+        background: #10b981;
+
+        padding: 8px 16px;
+
+        border-radius: 25px;
+
+        color: white;
+
+        text-decoration: none;
+
+        font-size: 14px;
+
+    }
+
+
+    .product-card a:hover {
+
+        background: #059669;
+
+    }
+
+   
+</style>
+
+
+<h2>All Products</h2>
+
+
+<!-- SEARCH + FILTER -->
+
+<form method="GET" action="/user/products" style="margin-bottom:20px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+
+    <div class="input-group" style="flex:1; min-width:200px; max-width:400px;">
+        <span class="input-group-text" style="background:white; border:1px solid #ced4da;">
+            <i class="fas fa-search"></i>
+        </span>
+        <input type="text" name="search" class="form-control" placeholder="Search product..." value="{{ request.args.get('search','') }}">
+        {% if request.args.get('search') %}
+        <a href="{{ url_for('user_products') }}" class="btn btn-outline-secondary" style="border:1px solid #ced4da;" title="Clear search">
+            <i class="fas fa-times"></i>
+        </a>
+        {% endif %}
+    </div>
+
+    <select name="category" class="form-select" style="width:auto; min-width:150px;">
+
+        <option value="">All Categories</option>
+
+        {% for cat in categories %}
+
+        <option value="{{ cat.category }}" {% if request.args.get('category')==cat.category %}selected{% endif %}>
+            {{ cat.category }}
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+
+    <button class="btn" style="background-color:#10b981; color:white; border:none;">
+        <i class="fas fa-filter"></i> Apply
+    </button>
+
+    {% if request.args.get('search') or request.args.get('category') %}
+    <a href="{{ url_for('user_products') }}" class="btn" style="background-color:#6c757d; color:white; border:none; text-decoration:none;">
+        <i class="fas fa-redo"></i> Reset
+    </a>
+    {% endif %}
+
+</form>
+
+
+
+<!-- PRODUCT GRID -->
+
+<div class="product-grid">
+
+    {% for product in products %}
+
+    <div class="product-card">
+
+        <img src="{{ url_for('static', filename='uploads/product_images/' + product.image) }}">
+
+        <h3>{{ product.name }}</h3>
+
+        <p>{{ product.category }}</p>
+
+        <p class="price">₹{{ product.price }}</p>
+
+        <a href="{{ url_for('user_product_details', product_id=product.product_id) }}">
+            View Details
+        </a>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+
+{% endblock %}

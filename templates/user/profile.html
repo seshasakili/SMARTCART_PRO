@@ -1,0 +1,128 @@
+{% extends "base1.html" %}
+
+{% block content %}
+
+<!-- Wrapper for content below navbar -->
+<div class="d-flex flex-column align-items-center justify-content-center" style="min-height: calc(100vh - 70px);">
+    <div class="card shadow emerald-card">
+
+        <div class="card-body">
+
+            <h4 class="text-center emerald-text mb-3">
+                👤 My Profile
+            </h4>
+
+            <!-- Profile Image -->
+            <div class="text-center mb-3">
+                {% if user.profile_image %}
+                <img src="{{ url_for('static', filename='uploads/user_profiles/' + user.profile_image) }}"
+                    class="rounded-circle shadow emerald-image">
+                {% else %}
+                <div
+                    class="rounded-circle bg-light d-flex align-items-center justify-content-center shadow emerald-image">
+                    <span class="text-muted small">No Image</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Form -->
+            <form method="POST" action="{{ url_for('user_profile') }}" enctype="multipart/form-data">
+
+                <!-- Name -->
+                <div class="mb-2">
+                    <label class="form-label small">Name</label>
+                    <input type="text" name="name" value="{{ user.name }}"
+                        class="form-control form-control-sm emerald-input" required>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-2">
+                    <label class="form-label small">Email</label>
+                    <input type="email" name="email" value="{{ user.email }}"
+                        class="form-control form-control-sm emerald-input" required>
+                </div>
+
+                <!-- Password -->
+                <div class="mb-2">
+                    <label class="form-label small">
+                        New Password <span class="text-muted">(optional)</span>
+                    </label>
+                    <input type="password" name="password" class="form-control form-control-sm emerald-input">
+                </div>
+
+                <!-- Upload -->
+                <div class="mb-3">
+                    <label class="form-label small">Profile Image</label>
+                    <input type="file" name="profile_image" accept="image/*"
+                        class="form-control form-control-sm emerald-input">
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-between">
+                    <a href="/user/products" class="btn btn-sm emerald-btn-outline">← Back</a>
+                    <button type="submit" class="btn btn-sm emerald-btn">Update</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Card */
+    .emerald-card {
+        width: 350px;
+        border-radius: 12px;
+    }
+
+    /* Heading */
+    .emerald-text {
+        color: #059669;
+        font-weight: 600;
+    }
+
+    /* Profile Image */
+    .emerald-image {
+        width: 110px;
+        height: 110px;
+        object-fit: cover;
+        margin: auto;
+        border: 3px solid #10B981;
+    }
+
+    /* Input */
+    .emerald-input {
+        border: 1px solid #10B981;
+        border-radius: 6px;
+    }
+
+    .emerald-input:focus {
+        border-color: #059669;
+        box-shadow: none;
+    }
+
+    /* Buttons */
+    .emerald-btn {
+        background: #10B981;
+        color: white;
+        border: none;
+    }
+
+    .emerald-btn:hover {
+        background: #059669;
+        color: white;
+    }
+
+    .emerald-btn-outline {
+        border: 1px solid #10B981;
+        color: #10B981;
+    }
+
+    .emerald-btn-outline:hover {
+        background: #10B981;
+        color: white;
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+{% block title %}Product List{% endblock %}
+
+{% block content %}
+
+<style>
+    /* Main Card */
+
+    .product-card {
+
+        background: #ffffff;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 10px 25px rgba(16, 185, 129, 0.25);
+
+    }
+
+
+    /* Heading */
+
+    .product-title {
+
+        text-align: center;
+        color: #059669;
+        font-weight: bold;
+        margin-bottom: 20px;
+
+    }
+
+
+    /* Table */
+
+    .emerald-table {
+
+        border-radius: 12px;
+        overflow: hidden;
+
+    }
+
+
+    /* Header */
+
+    .emerald-table thead {
+
+        background: linear-gradient(to right, #047857, #10B981);
+        color: white;
+        font-size: 15px;
+
+    }
+
+
+    /* Rows */
+
+    .emerald-table tbody tr {
+
+        transition: 0.3s;
+
+    }
+
+
+    .emerald-table tbody tr:hover {
+
+        background: #ECFDF5;
+
+    }
+
+
+    /* Image */
+
+    .product-img {
+
+        width: 65px;
+        height: 65px;
+        border-radius: 10px;
+        object-fit: cover;
+        border: 2px solid #10B981;
+
+    }
+
+
+    /* Buttons */
+
+    .btn-view {
+
+        background: #06b6d4;
+        color: white;
+        border: none;
+
+    }
+
+    .btn-update {
+
+        background: #f59e0b;
+        color: white;
+        border: none;
+
+    }
+
+    .btn-delete {
+
+        background: #ef4444;
+        color: white;
+        border: none;
+
+    }
+
+
+    .btn-view:hover {
+
+        background: #0891b2;
+        color: white;
+
+    }
+
+    .btn-update:hover {
+
+        background: #d97706;
+        color: white;
+
+    }
+
+    .btn-delete:hover {
+
+        background: #dc2626;
+        color: white;
+
+    }
+</style>
+
+
+<div class="container mt-4">
+
+    <div class="product-card">
+
+        <h3 class="product-title">📦 Product List</h3>
+
+
+        <table class="table table-bordered emerald-table text-center align-middle">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for p in products %}
+
+                <tr>
+
+                    <td>{{ p.product_id }}</td>
+
+                    <td>
+
+                        <img src="{{ url_for('static', filename='uploads/product_images/' + p.image) }}"
+                            class="product-img">
+
+                    </td>
+
+                    <td>{{ p.name }}</td>
+
+                    <td>{{ p.category }}</td>
+
+                    <td>₹ {{ p.price }}</td>
+
+                    <td>
+
+                        <a href="/admin/view-item/{{ p.product_id }}" class="btn btn-sm btn-view">View</a>
+
+
+                        <a href="/admin/update-item/{{ p.product_id }}" class="btn btn-sm btn-update">Update</a>
+
+
+                        <a href="/admin/delete-item/{{ p.product_id }}" class="btn btn-sm btn-delete"
+                            onclick="return confirm('Delete this product?')">
+
+                            Delete
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+
+    </div>
+
+</div>
+
+{% endblock %}

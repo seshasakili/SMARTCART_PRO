@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SMARTCART</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* ===== FLASH MESSAGE TOASTS ===== */
+        .toast-container {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .toast {
+            min-width: 300px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast-success {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .toast-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        .toast-warning {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+
+        .toast-info {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+        }
+
+        .toast .btn-close {
+            filter: invert(1);
+        }
+        /* ===== FULL PAGE LAYOUT FIX ===== */
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            background: #ecfdf5;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: linear-gradient(135deg, #047857, #10b981);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ffffff;
+        }
+
+        .brand {
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* ===== NAVBAR ===== */
+        .menu-bar {
+            background: #ffffff;
+            padding: 12px 40px;
+            box-shadow: 0 2px 10px rgba(16, 185, 129, 0.2);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .menu-bar a {
+            text-decoration: none;
+            margin-left: 30px;
+            color: #065f46;
+            font-weight: 500;
+            transition: 0.3s ease;
+            position: relative;
+        }
+
+        .menu-bar a::after {
+            content: "";
+            position: absolute;
+            width: 0%;
+            height: 3px;
+            left: 0;
+            bottom: -6px;
+            background: #10b981;
+            transition: 0.3s;
+        }
+
+        .menu-bar a:hover::after {
+            width: 100%;
+        }
+
+        .menu-bar a:hover {
+            color: #10b981;
+        }
+
+        .active-link {
+            color: #10b981 !important;
+        }
+
+        .active-link::after {
+            width: 100%;
+        }
+
+        /* ===== PAGE CONTENT ===== */
+        .page-content {
+            flex: 1;
+            padding: 30px 40px;
+        }
+
+        /* ===== CENTER CARD ===== */
+        .center-card {
+            width: 380px;
+            margin: auto;
+            padding: 25px;
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.25);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #064e3b;
+            color: #d1fae5;
+            padding: 18px 20px;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #6ee7b7;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #a7f3d0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .profile-circle {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            margin-left: 10px;
+            transition: 0.3s;
+        }
+
+        .profile-circle:hover {
+            transform: scale(1.08);
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ===== TOP HEADER ===== -->
+    <div class="header">
+        <div class="brand">SMARTCART</div>
+        {% if session.get('admin_id') %}
+        <div>Welcome, {{ session.get('admin_name') }}</div>
+        {% endif %}
+    </div>
+
+    <!-- ===== NAV MENU ===== -->
+    <div class="menu-bar">
+        {% if session.get('admin_id') %}
+        <a href="/admin/add-item" class="{% if request.path == '/admin/add-item' %}active-link{% endif %}">
+            Add Products
+        </a>
+        <a href="/admin/item-list" class="{% if request.path == '/admin/item-list' %}active-link{% endif %}">
+            View Products
+        </a>
+        <a href="/admin/profile" class="{% if request.path == '/admin/profile' %}active-link{% endif %}">
+            <i class="fas fa-user-circle me-1"></i> Profile
+        </a>
+        <a href="/admin-logout">Logout</a>
+        {% else %}
+        <a href="/admin-login" class="{% if request.path == '/admin-login' %}active-link{% endif %}">
+            Login
+        </a>
+        <a href="/admin-signup" class="{% if request.path == '/admin-signup' %}active-link{% endif %}">
+            Register
+        </a>
+        {% endif %}
+    </div>
+
+    <!-- Flash Message Toasts Container -->
+    <div class="toast-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                <div class="toast toast-{{ category }}" role="alert" data-bs-delay="4000" data-bs-autohide="true">
+                    <div class="toast-body d-flex align-items-center justify-content-between">
+                        <span>
+                            {% if category == 'success' %}
+                            <i class="fas fa-check-circle me-2"></i>
+                            {% elif category == 'danger' %}
+                            <i class="fas fa-exclamation-circle me-2"></i>
+                            {% elif category == 'warning' %}
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            {% elif category == 'info' %}
+                            <i class="fas fa-info-circle me-2"></i>
+                            {% endif %}
+                            {{ message }}
+                        </span>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- ===== PAGE CONTENT BLOCK ===== -->
+    <div class="page-content">
+        {% block content %}{% endblock %}
+    </div>
+    
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+        <div>
+            <a href="/about">About</a> |
+            <a href="/contact">Contact</a> |
+            <a href="#">Privacy Policy</a>
+        </div>
+        <div class="footer-bottom">
+            © 2026 SMARTCART. All Rights Reserved.
+        </div>
+    </div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Initialize and show flash message toasts
+    document.addEventListener('DOMContentLoaded', function() {
+        var toastElements = document.querySelectorAll('.toast');
+        
+        toastElements.forEach(function(toastElement) {
+            var toast = new bootstrap.Toast(toastElement, {
+                delay: 4000,
+                autohide: true
+            });
+            toast.show();
+        });
+    });
+</script>
+
+</html>

@@ -1,0 +1,26 @@
+{% extends "base1.html" %}
+
+{% block title %}Payment Success | SMARTCART{% endblock %}
+
+{% block content %}
+
+<div class="center-box">
+    <div class="card" style="text-align:center;">
+
+        <h2 style="color:#059669; margin-bottom:20px;">
+            ✅ Payment Successful!
+        </h2>
+
+        <p><strong>Payment ID:</strong> {{ payment_id }}</p>
+        <p><strong>Order ID:</strong> {{ order_id }}</p>
+
+        <br>
+
+        <a href="{{ url_for('user_products') }}" class="btn">
+            Continue Shopping
+        </a>
+
+    </div>
+</div>
+
+{% endblock %}

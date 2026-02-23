@@ -1,0 +1,128 @@
+{% extends "base1.html" %}
+{% block title %}Order Details{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <!-- Header -->
+        <div class="card-header bg-light">
+            <h4>📦 Order Details</h4>
+        </div>
+
+
+        <!-- Order Info -->
+        <div class="card-body">
+
+            <div class="row mb-3">
+
+                <div class="col-md-6">
+                    <strong>Order ID:</strong> {{ order.order_id }}
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Date:</strong> {{ order.order_date }}
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Status:</strong> {{ order.status }}
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Total:</strong>
+                    ₹{{ order.total_amount }}
+                </div>
+
+            </div>
+
+
+            <!-- Items Table -->
+            <div class="table-responsive">
+
+                <table class="table table-bordered text-center align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>Image</th>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for item in items %}
+
+                        <tr>
+
+                            <td>
+                                <img src="{{ url_for('static', filename='uploads/product_images/' + item.image) }}"
+                                    width="70">
+                            </td>
+
+                            <td>
+                                {{ item.name }}
+                            </td>
+
+                            <td>
+                                ₹{{ item.price }}
+                            </td>
+
+                            <td>
+                                {{ item.quantity }}
+                            </td>
+
+                            <td>
+                                ₹{{ item.price * item.quantity }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <a href="{{ url_for('my_orders') }}" class="btn btn-success mt-3">
+                ⬅ Back to My Orders
+            </a>
+
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<style>
+    .btn-success {
+
+        background-color: #10B981;
+        border-color: #10B981;
+
+    }
+
+    .btn-success:hover {
+
+        background-color: #059669;
+        border-color: #059669;
+
+    }
+</style>
+
+
+{% endblock %}

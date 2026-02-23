@@ -1,0 +1,99 @@
+{% extends "base1.html" %}
+
+{% block content %}
+<style>
+    /* Center container */
+    .center-card {
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+        padding: 0 10px;
+    }
+
+    /* Compact product card */
+    .product-card {
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        max-width: 500px;
+        /* smaller card width */
+        width: 100%;
+       
+        
+    }
+
+    .product-card img {
+        border-radius: 10px;
+        max-height: 200px;
+        /* smaller image */
+        object-fit: contain;
+        margin-bottom: 15px;
+    }
+
+    .product-details h3 {
+        color: #046307;
+        /* Emerald green heading */
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .product-details p {
+        font-size: 0.95rem;
+        margin-bottom: 8px;
+    }
+
+    .product-actions a {
+        display: inline-block;
+        margin: 5px 5px 0 0;
+        padding: 8px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        color: white;
+        background-color: #046307;
+        /* Emerald green */
+        font-size: 0.9rem;
+        transition: background-color 0.3s;
+    }
+
+    .product-actions a:hover {
+        background-color: #034a02;
+    }
+
+   
+
+    @media (max-width: 576px) {
+        .product-card {
+            padding: 15px;
+        }
+
+        .product-actions a {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="center-card">
+    <div class="product-card">
+        <div class="text-center">
+            <!-- Product Image -->
+            <img src="{{ url_for('static', filename='uploads/product_images/' + product['image']) }}" class="img-fluid">
+        </div>
+
+        <div class="product-details">
+            <h3>{{ product['name'] }}</h3>
+            <p><strong>Description:</strong> {{ product['description'] }}</p>
+            <p><strong>Category:</strong> {{ product['category'] }}</p>
+            <p><strong>Price:</strong> ₹{{ product['price'] }}</p>
+
+            <div class="product-actions text-center">
+                <a href="/user/products">Back</a>
+                <a href="/user/add-to-cart/{{ product['product_id'] }}">Add to Cart</a>
+                <a href="/user/cart">Go to Cart</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

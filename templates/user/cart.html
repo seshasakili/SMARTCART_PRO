@@ -1,0 +1,145 @@
+{% extends "base1.html" %}
+
+{% block title %}Your Cart | PickCart{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="card">
+
+        <div class="card-header bg-light">
+            <center>
+                <h4>🛒 My Cart</h4>
+            </center> <br>
+        </div>
+
+        <div class="card-body p-0">
+
+            <table class="table mb-0 text-center align-middle">
+
+                <!-- ✅ THEAD -->
+                <thead class="table-light">
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <!-- ✅ TBODY -->
+                <tbody>
+
+                    {% for pid, item in cart.items() %}
+
+                    <tr style="border-bottom:1px solid #e5e7eb;">
+
+                        <td style="padding:10px;">
+                            <img src="/static/uploads/product_images/{{ item.image }}" width="70">
+                        </td>
+
+                        <td>
+                            {{ item.name }}
+                        </td>
+
+                        <td>
+                            ₹{{ item.price }}
+                        </td>
+
+                        <td>
+
+                            <div class="d-flex justify-content-center align-items-center">
+
+                                <a href="/user/cart/decrease/{{ pid }}" class="btn" style="padding:4px 10px;">−</a>
+
+                                <strong style="margin:0 10px;">
+                                    {{ item.quantity }}
+                                </strong>
+
+                                <a href="/user/cart/increase/{{ pid }}" class="btn" style="padding:4px 10px;">+</a>
+
+                            </div>
+
+                        </td>
+
+                        <td>
+                            <strong>
+                                ₹{{ item.price * item.quantity }}
+                            </strong>
+                        </td>
+
+                        <td>
+
+                            <a href="/user/cart/remove/{{ pid }}" class="btn" style="background:#10B981;">
+
+                                Remove
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div class="card-footer d-flex justify-content-between align-items-center">
+
+            <h4 class="mb-0">
+                Grand Total: ₹{{grand_total}}
+            </h4>
+
+            <div>
+
+                <div>
+
+                    <a href="{{ url_for('user_products') }}" class="btn btn-success me-2">
+                        Continue Shopping
+                    </a>
+
+                    <!-- ✅ NEW Address Button -->
+                    <a href="{{ url_for('add_address') }}" class="btn btn-success me-2">
+                        Add Address
+                    </a>
+
+                    <a href="{{ url_for('payment') }}" class="btn btn-success">
+                        Pay Now
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<style>
+    .btn-success {
+
+        background-color: #10B981;
+        border-color: #10B981;
+
+    }
+
+    .btn-success:hover {
+
+        background-color: #059669;
+        border-color: #059669;
+
+    }
+</style>
+
+
+{% endblock %}

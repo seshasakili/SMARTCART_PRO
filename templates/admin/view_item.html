@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% block title %}View Product{% endblock %}
+
+{% block content %}
+
+<div class="view-product-container">
+
+    <div class="card shadow emerald-card">
+
+        <!-- Image -->
+        <div class="text-center mt-3">
+
+            <img src="/static/uploads/product_images/{{ product.image }}" class="img-fluid emerald-image">
+
+        </div>
+
+
+        <!-- Details -->
+        <div class="card-body pt-2 text-center">
+
+            <h5 class="emerald-text">
+
+                {{ product.name }}
+
+            </h5>
+
+
+            <p class="small text-start">
+
+                <strong>Description:</strong><br>
+
+                {{ product.description }}
+
+            </p>
+
+
+            <p class="small text-start">
+
+                <strong>Category:</strong>
+
+                {{ product.category }}
+
+            </p>
+
+
+            <p class="small emerald-price text-start">
+
+                <strong>Price:</strong>
+
+                ₹{{ product.price }}
+
+            </p>
+
+
+            <a href="/admin/item-list" class="btn emerald-btn btn-sm mt-2">
+
+                ← Back
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<style>
+    /* PERFECT CENTER FIX */
+
+    .view-product-container {
+
+        height: 75vh;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+    }
+
+
+    /* Card */
+
+    .emerald-card {
+
+        width: 350px;
+
+        border-radius: 12px;
+
+    }
+
+
+    /* Image */
+
+    .emerald-image {
+
+        height: 160px;
+
+        object-fit: contain;
+
+    }
+
+
+    /* Text */
+
+    .emerald-text {
+
+        color: #059669;
+
+        font-weight: 600;
+
+    }
+
+
+    .emerald-price {
+
+        color: #10B981;
+
+        font-weight: 600;
+
+    }
+
+
+    /* Button */
+
+    .emerald-btn {
+
+        background: #10B981;
+
+        color: white;
+
+        border: none;
+
+    }
+
+
+    .emerald-btn:hover {
+
+        background: #059669;
+
+        color: white;
+
+    }
+</style>
+
+{% endblock %}

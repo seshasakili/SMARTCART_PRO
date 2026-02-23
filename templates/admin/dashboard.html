@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="text-center">
+
+  <h2 class="mb-3">Welcome to smartcart Admin Dashboard</h2>
+
+  <p class="text-muted">
+    Manage your products, view items and control your store easily.
+  </p>
+
+</div>
+
+<hr class="my-5">
+
+
+<!-- Quick Dashboard Buttons -->
+<div class="row justify-content-center">
+
+  <!-- Add Product -->
+  <div class="col-md-3 mb-4">
+    <div class="card shadow text-center p-4">
+      <h5>Add Products</h5>
+      <p class="text-muted">Insert new products into store</p>
+
+      <a href="/admin/add-item" class="btn btn-info">
+        Go
+      </a>
+    </div>
+  </div>
+
+  <!-- View Products -->
+  <div class="col-md-3 mb-4">
+    <div class="card shadow text-center p-4">
+      <h5>View Products</h5>
+      <p class="text-muted">See all products list</p>
+
+      <a href="/admin/item-list" class="btn btn-success">
+        Go
+      </a>
+
+      <!-- <a href="/admin/profile" class="btn btn-secondary">
+        Go
+      </a>  -->
+
+      <!-- <a href="/admin/order-list" class="btn btn-warning">
+        View Orders
+        </a>
+      <a href="/admin/profile" class="btn btn-primary">
+        View Profile   -->
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

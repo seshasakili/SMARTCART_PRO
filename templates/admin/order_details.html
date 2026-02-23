@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="card shadow-sm p-4" style="max-width:900px; margin:auto;">
+
+        <h2 class="mb-3">📦 Order #{{ order.order_id }}</h2>
+
+        <div class="mb-3">
+            <p><strong>Payment Status:</strong> {{ order.payment_status }}</p>
+            <p><strong>Total Amount:</strong> ₹{{ order.amount }}</p>
+            <p>
+                <strong>Current Status:</strong>
+                <span class="badge bg-success">{{ order.order_status }}</span>
+            </p>
+        </div>
+
+        <hr>
+
+        <!-- ===== UPDATE STATUS ===== -->
+        <h4 class="mb-3">Update Order Status</h4>
+
+        <form method="POST" action="/admin/update-order-status/{{ order.order_id }}"
+              class="row g-3 mb-4">
+
+            <div class="col-md-6">
+                <select name="status" class="form-select" required>
+                    <option value="Pending" {% if order.order_status=='Pending' %}selected{% endif %}>Pending</option>
+                    <option value="Confirmed" {% if order.order_status=='Confirmed' %}selected{% endif %}>Confirmed</option>
+                    <option value="Packed" {% if order.order_status=='Packed' %}selected{% endif %}>Packed</option>
+                    <option value="Shipped" {% if order.order_status=='Shipped' %}selected{% endif %}>Shipped</option>
+                    <option value="Delivered" {% if order.order_status=='Delivered' %}selected{% endif %}>Delivered</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-success">
+                    Update Status
+                </button>
+            </div>
+        </form>
+
+        <hr>
+
+        <!-- ===== ORDER ITEMS ===== -->
+        <h4 class="mb-3">Order Items</h4>
+
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-success">
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price (₹)</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for it in items %}
+                <tr>
+                    <td>{{ it.product_name }}</td>
+                    <td>{{ it.quantity }}</td>
+                    <td>₹{{ it.price }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3" class="text-center text-muted">
+                        No items found
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="mt-4">
+            <a href="/admin/orders" class="btn btn-outline-success">
+                ← Back to Orders
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

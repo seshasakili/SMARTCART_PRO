@@ -1,0 +1,95 @@
+
+
+
+{% extends "base1.html" %}
+{% block title %}My Orders{% endblock %}
+
+{% block content %}
+
+<h2 class="cart-title" style="text-align:center; margin-bottom:30px;">📦 My Orders</h2>
+
+{% if orders|length == 0 %}
+<div style="text-align:center;">
+    <p>You have not placed any orders yet.</p>
+    <a href="/user/products" class="btn pay-btn">Start Shopping</a>
+</div>
+{% else %}
+<div class="orders-container">
+    {% for order in orders %}
+    <div class="order-card">
+        <h3>Order #{{ order.order_id }}</h3>
+        <div class="order-info">
+            <p><strong>Amount:</strong> ₹{{ order.amount }}</p>
+            <p><strong>Status:</strong> {{ order.payment_status }}</p>
+            <p><strong>Date:</strong> {{ order.created_at }}</p>
+        </div>
+
+        <div class="order-buttons">
+            <a href="/user/order-success/{{ order.order_id }}" class="btn small-btn">
+                View Order
+            </a>
+            <a href="{{ url_for('download_invoice', order_id=order.order_id) }}" class="btn small-btn">
+                Download Invoice
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Orders Page Styles -->
+<style>
+    .orders-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .order-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        width: 280px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .order-card h3 {
+        margin-bottom: 12px;
+    }
+
+    .order-info p {
+        margin: 4px 0;
+        font-size: 14px;
+    }
+
+    /* Buttons side by side */
+    .order-buttons {
+
+        margin-top: 12px;
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .order-buttons .small-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+        font-weight: 600;
+        border-radius: 6px;
+        background-color: lightseagreen;
+        color: white;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .order-buttons .small-btn:hover {
+        background-color: hashtag#15803d;
+        transform: scale(1.05);
+    }
+</style>
+
+{% endblock %}

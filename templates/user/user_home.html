@@ -1,0 +1,20 @@
+{% extends "base1.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="card">
+ <h2>Welcome, {{ user_name }} 👋</h2>
+ <br>
+
+ <a href="/user/cart">
+    Cart ({{ session.get('cart', [])|length }})
+
+</a>
+<br>
+ <a href="/user/products" class="btn">Browse Products</a>
+</div>
+
+{% endblock %}
+
+

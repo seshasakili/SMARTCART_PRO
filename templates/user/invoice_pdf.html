@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <style>
+        body {
+
+            font-family: Arial;
+
+        }
+
+        .invoice-box {
+
+            width: 700px;
+
+            margin: auto;
+
+            padding: 20px;
+
+        }
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+        }
+
+        th,
+        td {
+
+            border: 1px solid #ddd;
+
+            padding: 10px;
+
+        }
+
+        th {
+
+            background: #10b981;
+
+            color: white;
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+    <div class="invoice-box">
+
+        <h2>SMARTCART INVOICE</h2>
+
+        <p>Order ID: {{ order.order_id }}</p>
+
+        <p>Date: {{ order.created_at }}</p>
+
+        <table>
+
+            <tr>
+
+                <th>Product</th>
+
+                <th>Qty</th>
+
+                <th>Price</th>
+
+            </tr>
+
+
+            {% for it in items %}
+
+            <tr>
+
+                <td>{{ it.product_name }}</td>
+
+                <td>{{ it.quantity }}</td>
+
+                <td>₹ {{ it.price }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        <h3 style="text-align:right;">
+
+            Total: ₹ {{ order.amount }}
+
+        </h3>
+
+    </div>
+
+</body>
+
+</html>
