@@ -1,22 +1,47 @@
-# config.py
 # ------------------------------------
-# This file holds all configurations
-# like Secret Key, Database connection
-# details, Email settings, Razorpay keys etc.
+# SMARTCART_PRO CONFIG FILE (SQLite3)
 # ------------------------------------
 
+import os
 
-SECRET_KEY = "abcd1234"   # used for sessions
+# Base directory
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-# SQLite Database Configuration
-DB_NAME = "smartcart.db"
+# ---------------- SECRET KEY ----------------
 
-# Email SMTP Settings
-MAIL_SERVER = 'smtp.gmail.com'
+SECRET_KEY = "abcd1234"
+
+
+# ---------------- SQLITE DATABASE ----------------
+# This will create smartcart.db in your project folder
+
+DB_NAME = os.path.join(BASE_DIR, "smartcart.db")
+
+
+# ---------------- UPLOAD FOLDERS ----------------
+
+UPLOAD_FOLDER = os.path.join(BASE_DIR, "static", "uploads", "products")
+
+ADMIN_UPLOAD_FOLDER = os.path.join(BASE_DIR, "static", "uploads", "admin_profiles")
+
+USER_UPLOAD_FOLDER = os.path.join(BASE_DIR, "static", "uploads", "user_profiles")
+
+
+# ---------------- EMAIL CONFIG ----------------
+
+MAIL_SERVER = "smtp.gmail.com"
+
 MAIL_PORT = 587
+
 MAIL_USE_TLS = True
-MAIL_USERNAME = 'seshasakili@gmail.com'
-MAIL_PASSWORD = 'srtd biic gigg nsnv'   # Gmail App Password
+
+MAIL_USERNAME = "seshasakili@gmail.com"
+
+MAIL_PASSWORD = "srtd biic gigg nsnv"
+
+
+# ---------------- RAZORPAY CONFIG ----------------
 
 RAZORPAY_KEY_ID = "rzp_test_SFXKBUvo0xSUpI"
+
 RAZORPAY_KEY_SECRET = "39iP0wQaPqTlwXIjShCqoITB"

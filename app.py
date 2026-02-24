@@ -78,6 +78,8 @@ mail = Mail(app)
 
 
 # ---------------- DB CONNECTION FUNCTION --------------
+
+DB_NAME = "smartcart.db"
 def get_db_connection():
     conn = sqlite3.connect(config.DB_NAME)
     conn.row_factory = sqlite3.Row
@@ -171,11 +173,15 @@ init_db()
 
 
 # ------------------- IMAGE UPLOAD PATH -------------------
-UPLOAD_FOLDER = 'static/uploads/product_images'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+# Use paths from config.py (works for both local and PythonAnywhere)
+app.config['UPLOAD_FOLDER'] = config.UPLOAD_FOLDER
+app.config['ADMIN_UPLOAD_FOLDER'] = config.ADMIN_UPLOAD_FOLDER
 
-ADMIN_UPLOAD_FOLDER = 'static/uploads/admin_profiles'
-app.config['ADMIN_UPLOAD_FOLDER'] = ADMIN_UPLOAD_FOLDER
+# Create upload directories if they don't exist
+os.makedirs(config.UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(config.ADMIN_UPLOAD_FOLDER, exist_ok=True)
+if hasattr(config, 'USER_UPLOAD_FOLDER'):
+    os.makedirs(config.USER_UPLOAD_FOLDER, exist_ok=True)
 
 # ================= HOME =================
 @app.route("/")
@@ -852,7 +858,7 @@ def user_profile():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    upload_folder = "static/uploads/user_profiles"
+    upload_folder = config.USER_UPLOAD_FOLDER
     os.makedirs(upload_folder, exist_ok=True)
 
 
